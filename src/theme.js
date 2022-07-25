@@ -6,7 +6,9 @@ const theme = {
     primary: '#0366d6',
     mainBackground: '#e1e4e8',
     appBarBackground: '#385170',
-    repositoryItemBackground: 'white', 
+    repositoryItemBackground: 'white',
+    signInFormBackground: 'white',
+    textInputBorder: 'gray',
   },
   fontSizes: {
     body: 14,
@@ -21,8 +23,15 @@ const theme = {
     bold: '700',
   },
   padding: {
-    AppBarTab: 20,
+    formHorizontal: 20,
+    formVertical: 10,
+    formInput: 10,
+    formButtonVertical: 10,
   },
+  borderRadius: {
+    small: 5,
+    normal: 10,
+  }
 };
 
 export default theme;
