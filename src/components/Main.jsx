@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     backgroundColor: theme.colors.mainBackground,
-    fontFamily: theme.colors.fonts.main,
+    fontFamily: theme.fonts.main,
   },
 });
 
