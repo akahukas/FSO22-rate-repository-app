@@ -9,6 +9,7 @@ const theme = {
     repositoryItemBackground: 'white',
     signInFormBackground: 'white',
     textInputBorder: 'gray',
+    error: '#ff0000',
   },
   fontSizes: {
     body: 14,
