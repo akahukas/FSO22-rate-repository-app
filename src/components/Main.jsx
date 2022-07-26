@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import { Route, Routes, Navigate } from 'react-router-native';
 
 // Komponentit.
-import RepositoryList from './RepositoryList';
+import RepositoryList from './RepositoryList/index';
 import SignIn from './SignIn';
 import AppBar from './AppBar';
 

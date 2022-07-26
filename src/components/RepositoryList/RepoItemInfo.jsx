@@ -1,5 +1,5 @@
 import { Image, View } from 'react-native'
-import Text from './Text'
+import Text from '../Text'
 
 const RepoItemInfo = ({ mainStyle, avatarStyle, textStyle, imgSource, name, description }) => {
   if (description.length >= 40) {

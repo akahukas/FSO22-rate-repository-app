@@ -4,7 +4,7 @@ import RepoItemInfo from './RepoItemInfo'
 import RepoItemTag from './RepoItemTag'
 import RepoItemStats from './RepoItemStats'
 
-import theme from '../theme'
+import theme from '../../theme'
 
 const styles = StyleSheet.create({
   separator: {
