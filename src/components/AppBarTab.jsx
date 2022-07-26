@@ -2,14 +2,23 @@ import { Pressable } from 'react-native'
 import { Link } from 'react-router-native'
 import Text from './Text'
 
-const AppBarTab = ({ handlePress, tabText, path, style }) => {
+const AppBarTab = ({ hasLink, handlePress, tabText, path, style }) => {
   return (
     <Pressable onPress={handlePress} style={style} >
-      <Link to={path}>
-        <Text color='textWhite' fontWeight='bold' fontSize='subheading'>
-          {tabText}
-        </Text>
-      </Link>
+      { hasLink
+        ? (
+          <Link to={path}>
+            <Text color='textWhite' fontWeight='bold' fontSize='subheading'>
+              {tabText}
+            </Text>
+          </Link>
+        )
+        : (
+          <Text color='textWhite' fontWeight='bold' fontSize='subheading'>
+            {tabText}
+          </Text>
+        )
+      }
     </Pressable>
   )
 }
