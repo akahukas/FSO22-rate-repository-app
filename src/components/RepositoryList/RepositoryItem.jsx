@@ -57,6 +57,7 @@ const RepositoryItem = ({ item, itemTheme }) => {
     <View
       key={item.id}
       style={itemTheme}
+      testID='repositoryItem'
     >
       <RepoItemInfo
         mainStyle={styles.repoItemInfo}

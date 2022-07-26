@@ -7,7 +7,7 @@ const RepoItemStat = ({ style, number, text }) => {
   }
 
   return (
-    <View style={style} >
+    <View style={style} testID='repoItemStat' >
       <Text fontWeight='bold'>
         {number}
       </Text>

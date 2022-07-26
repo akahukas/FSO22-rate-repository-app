@@ -4,7 +4,7 @@ import Text from '../Text'
 const RepoItemInfo = ({ mainStyle, avatarStyle, textStyle, imgSource, name, description }) => {
   if (description.length >= 40) {
     return (
-      <View style={mainStyle} >
+      <View style={mainStyle} testID='repoItemInfo' >
         <Image
           style={avatarStyle}
           source={{uri: `${imgSource}`}}
@@ -23,7 +23,7 @@ const RepoItemInfo = ({ mainStyle, avatarStyle, textStyle, imgSource, name, desc
   }
   
   return (
-    <View style={mainStyle} >
+    <View style={mainStyle} testID='repoItemInfo' >
       <Image
         style={avatarStyle}
         source={{uri: `${imgSource}`}}

@@ -3,7 +3,7 @@ import Text from '../Text'
 
 const RepoItemTag = ({ textTag, mainStyle, tagStyle }) => {
   return (
-    <View style={mainStyle} >
+    <View style={mainStyle} testID='repoItemTag' >
       <View style={tagStyle}>
         <Text color='textWhite' >
           {textTag}
