@@ -24,12 +24,26 @@ export const GET_ME = gql`
   }
 `
 
-export const REPOSITORY_WITH_URL = gql`
+export const REPOSITORY_WITH_URL_AND_REVIEWS = gql`
   ${CORE_REPOSITORY_FIELDS}
   query getRepositoryWithUrl($id: ID!) {
     repository(id: $id) {
       ...CoreRepositoryFields
       url
+      reviews {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+        }
+      }
     }
   }
 `

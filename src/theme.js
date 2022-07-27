@@ -10,6 +10,9 @@ const theme = {
     appBarBackground: '#385170',
     repositoryItemBackground: 'white',
     signInFormBackground: 'white',
+    reviewItemBackground: 'white',
+    ratingIconOuterCircle: '#0366d6',
+    ratingIconInnerCircle: 'white',
     textInputBorder: 'gray',
     error: '#ff0000',
   },
@@ -34,6 +37,8 @@ const theme = {
     formVertical: 10,
     formInput: 10,
     formButtonVertical: 10,
+    reviewItemHorizontal: 15,
+    reviewItemVertical: 15,
   },
   borderRadius: {
     small: 5,
