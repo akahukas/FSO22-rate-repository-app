@@ -26,3 +26,10 @@ export const CORE_REVIEW_FIELDS = gql`
     }
   }
 `
+
+export const CORE_USER_FIELDS = gql`
+  fragment CoreUserFields on User {
+    id
+    username
+  }
+`

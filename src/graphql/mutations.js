@@ -1,6 +1,9 @@
 import { gql } from '@apollo/client'
 
-import { CORE_REVIEW_FIELDS } from './fragments'
+import {
+  CORE_REVIEW_FIELDS,
+  CORE_USER_FIELDS
+} from './fragments'
 
 export const AUTHENTICATE = gql`
   mutation Authenticate($credentials: AuthenticateInput) {
@@ -16,6 +19,15 @@ export const ADD_REVIEW = gql`
     createReview(review: $review) {
       ...CoreReviewFields
       repositoryId
+    }
+  }
+`
+
+export const ADD_USER = gql`
+  ${CORE_USER_FIELDS}
+  mutation AddUser($user: CreateUserInput) {
+    createUser(user: $user) {
+      ...CoreUserFields
     }
   }
 `

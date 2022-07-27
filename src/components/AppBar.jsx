@@ -94,6 +94,15 @@ const AppBar = () => {
               />
             )
         }
+        { !loggedInUser && (
+          <AppBarTab
+            tabText='Sign up'
+            hasLink={true}
+            path='/signup'
+            handlePress={null}
+            style={styles.appBarTab}
+        />
+        )}
       </ScrollView>
     </View>
   )

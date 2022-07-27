@@ -2,7 +2,8 @@ import { gql } from '@apollo/client'
 
 import {
   CORE_REPOSITORY_FIELDS,
-  CORE_REVIEW_FIELDS
+  CORE_REVIEW_FIELDS,
+  CORE_USER_FIELDS
 } from './fragments'
 
 export const GET_REPOSITORIES = gql`
@@ -19,10 +20,10 @@ export const GET_REPOSITORIES = gql`
 `
 
 export const GET_ME = gql`
+  ${CORE_USER_FIELDS}
   query {
     me {
-      id
-      username
+      ...CoreUserFields
     }
   }
 `
