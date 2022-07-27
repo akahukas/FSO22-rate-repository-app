@@ -1,5 +1,4 @@
-import { View, StyleSheet } from 'react-native' 
-import { ItemSeparator } from './index'
+import { View, StyleSheet } from 'react-native'
 import RepositoryItem from '../RepositoryList/RepositoryItem'
 
 import theme from '../../theme'
@@ -10,7 +9,12 @@ const styles = StyleSheet.create({
   repositoryItem: {
     backgroundColor: theme.colors.repositoryItemBackground,
   },
+  separator: {
+    height: 10,
+  },
 })
+
+export const ItemSeparator = () => <View style={styles.separator} />
 
 const RepositoryInfo = ({ repository }) => {
   

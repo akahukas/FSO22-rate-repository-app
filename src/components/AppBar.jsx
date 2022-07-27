@@ -66,6 +66,15 @@ const AppBar = () => {
           handlePress={null}
           style={styles.appBarTab}
         />
+        { loggedInUser && (
+          <AppBarTab
+            tabText='Create a review'
+            hasLink={true}
+            path='/addreview'
+            handlePress={null}
+            style={styles.appBarTab}
+          />
+        )}
         { loggedInUser !== null // Ehdollinen rendeöinti riippuen komponentin tilasta.
             ? (
               <AppBarTab

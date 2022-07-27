@@ -18,7 +18,7 @@ const initialValues = {
 
 const styles = StyleSheet.create({
   signInForm: {
-    backgroundColor: theme.colors.signInFormBackground,
+    backgroundColor: theme.colors.formBackground,
     display: 'flex',
     flexDirection: 'column',
     paddingHorizontal: theme.padding.formHorizontal,

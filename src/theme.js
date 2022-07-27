@@ -9,7 +9,7 @@ const theme = {
     mainBackground: '#e1e4e8',
     appBarBackground: '#385170',
     repositoryItemBackground: 'white',
-    signInFormBackground: 'white',
+    formBackground: 'white',
     reviewItemBackground: 'white',
     ratingIconOuterCircle: '#0366d6',
     ratingIconInnerCircle: 'white',

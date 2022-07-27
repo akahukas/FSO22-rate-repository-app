@@ -64,6 +64,10 @@ const UserAndDate = ({ createdAt, username }) => {
 )}
 
 const ReviewItem = ({ review }) => {
+  // Jos arvostelun teksti on riittävän lyhyt, vältetään
+  // sen joutuminen samalle riville muiden elementtien kanssa.
+  const wrapText = review.text.length <= 40
+
   return (
     <View
       style={styles.reviewItem}
@@ -75,7 +79,11 @@ const ReviewItem = ({ review }) => {
         createdAt={review.createdAt}
         username={review.user.username}
       />
-      <Text style={styles.reviewText} >
+      <Text style={wrapText
+        ? {...styles.reviewText, minWidth: 200}
+        : styles.reviewText
+        }
+      >
         {review.text}
       </Text>
     </View>

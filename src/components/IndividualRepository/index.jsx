@@ -3,7 +3,7 @@ import { View, StyleSheet, FlatList } from 'react-native'
 import Text from '../Text'
 import ReviewItem from './ReviewItem'
 import RepositoryInfo from './RepositoryInfo'
-import theme from '../..theme'
+import theme from '../../theme'
 
 // Kyselyt.
 import { useQuery } from '@apollo/client'
