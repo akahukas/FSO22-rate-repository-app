@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client'
 
 import { GET_REPOSITORIES } from '../graphql/queries'
 
-const useRepositories = (selectedPrinciple) => {
+const useRepositories = (selectedPrinciple, debouncedFilter) => {
   let orderBy = null
   let orderDirection = null
 
@@ -23,6 +23,7 @@ const useRepositories = (selectedPrinciple) => {
     variables: {
       orderBy,
       orderDirection,
+      searchKeyword: debouncedFilter,
     },
     fetchPolicy: 'cache-and-network',
   })

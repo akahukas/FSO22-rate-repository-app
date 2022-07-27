@@ -2,9 +2,11 @@ import { FlatList, View, StyleSheet, Pressable } from 'react-native';
 import { useNavigate } from 'react-router-native';
 import RepositoryItem from './RepositoryItem';
 import SelectOrder from './SelectOrder';
+import Filter from './Filter';
 
 import useRepositories from '../../hooks/useRepositories';
 import { useState } from 'react';
+import { useDebounce } from 'use-debounce';
 
 import theme from '../../theme';
 import Text from '../Text';
@@ -22,7 +24,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const ItemSeparator = () => <View style={styles.separator} />;
+const ItemSeparator = () => <View style={styles.separator} />
 
 export const RepositoryListContainer = ({ repositories, selectedPrinciple, setSelectedPrinciple }) => {
   const repositoryNodes = repositories
@@ -35,12 +37,12 @@ export const RepositoryListContainer = ({ repositories, selectedPrinciple, setSe
     <FlatList
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
-      ListHeaderComponent={() => (
+      ListHeaderComponent={() =>
         <SelectOrder
           selectedPrinciple={selectedPrinciple}
           setSelectedPrinciple={setSelectedPrinciple}
         />
-      )}
+      }
       renderItem={({ item }) => (
         <Pressable onPress={() => navigate(`/repositories/${item.id}`)}>
           <RepositoryItem
@@ -53,12 +55,17 @@ export const RepositoryListContainer = ({ repositories, selectedPrinciple, setSe
   );
 }
 
-const RepositoryList = () => {
+const RepositoryList = ({ filter }) => {
   const [selectedPrinciple, setSelectedPrinciple] = useState('latestRepositories')
-  
-  console.log(selectedPrinciple)
 
-  const { repositories, error, loading } = useRepositories(selectedPrinciple);
+  // Suoritetaan filtterin tilanmuutoksesta aiheutuva
+  // uudelleenkysely puolen sekunnin viiveellä.
+  const [debouncedFilter] = useDebounce(filter, 500)
+
+  const { repositories, error, loading } = useRepositories(
+    selectedPrinciple,
+    debouncedFilter
+  );
 
   if (error) {
     return (
@@ -84,6 +91,22 @@ const RepositoryList = () => {
       setSelectedPrinciple={setSelectedPrinciple}
     />
   )
-};
+}
 
-export default RepositoryList;
+const RepositoryScene = () => {
+  // Eriytetään filtteröinnin tilanhallinta ja renderöinti omaan
+  // funktioonsa, jotta ei menetetä hakupalkin focusta sen tilan muuttuessa.
+  const [filter, setFilter] = useState('')
+
+  return (
+    <View>
+      <Filter
+        filter={filter}
+        setFilter={setFilter}
+      />
+      <RepositoryList filter={filter} />
+    </View>
+  )
+}
+
+export default RepositoryScene;

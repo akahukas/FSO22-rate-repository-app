@@ -8,15 +8,23 @@ import {
 
 export const GET_REPOSITORIES = gql`
   ${CORE_REPOSITORY_FIELDS}
-  query getRepositories($orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection) {
-    repositories(orderBy: $orderBy, orderDirection: $orderDirection) {
-      edges {
-        node {
-          ...CoreRepositoryFields
+  query getRepositories(
+    $orderBy: AllRepositoriesOrderBy,
+    $orderDirection: OrderDirection,
+    $searchKeyword: String
+    ) {
+      repositories(
+        orderBy: $orderBy,
+        orderDirection: $orderDirection
+        searchKeyword: $searchKeyword
+        ) {
+          edges {
+            node {
+              ...CoreRepositoryFields
+            }
+          }
         }
       }
-    }
-  }
 `
 
 export const GET_ME = gql`
