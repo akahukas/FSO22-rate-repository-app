@@ -1,8 +1,10 @@
 import { FlatList, View, StyleSheet, Pressable } from 'react-native';
 import { useNavigate } from 'react-router-native';
 import RepositoryItem from './RepositoryItem';
+import SelectOrder from './SelectOrder';
 
 import useRepositories from '../../hooks/useRepositories';
+import { useState } from 'react';
 
 import theme from '../../theme';
 import Text from '../Text';
@@ -22,7 +24,7 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({ repositories }) => {
+export const RepositoryListContainer = ({ repositories, selectedPrinciple, setSelectedPrinciple }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
     : [];
@@ -33,6 +35,12 @@ export const RepositoryListContainer = ({ repositories }) => {
     <FlatList
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
+      ListHeaderComponent={() => (
+        <SelectOrder
+          selectedPrinciple={selectedPrinciple}
+          setSelectedPrinciple={setSelectedPrinciple}
+        />
+      )}
       renderItem={({ item }) => (
         <Pressable onPress={() => navigate(`/repositories/${item.id}`)}>
           <RepositoryItem
@@ -46,7 +54,11 @@ export const RepositoryListContainer = ({ repositories }) => {
 }
 
 const RepositoryList = () => {
-  const { repositories, error, loading } = useRepositories();
+  const [selectedPrinciple, setSelectedPrinciple] = useState('latestRepositories')
+  
+  console.log(selectedPrinciple)
+
+  const { repositories, error, loading } = useRepositories(selectedPrinciple);
 
   if (error) {
     return (
@@ -65,7 +77,13 @@ const RepositoryList = () => {
       </View>
     )
   }
-  return <RepositoryListContainer repositories={repositories} />
+  return (
+    <RepositoryListContainer
+      repositories={repositories}
+      selectedPrinciple={selectedPrinciple}
+      setSelectedPrinciple={setSelectedPrinciple}
+    />
+  )
 };
 
 export default RepositoryList;
