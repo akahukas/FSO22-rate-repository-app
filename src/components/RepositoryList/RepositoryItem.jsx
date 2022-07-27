@@ -1,4 +1,5 @@
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Pressable } from 'react-native'
+import Text from '../Text'
 
 import RepoItemInfo from './RepoItemInfo'
 import RepoItemTag from './RepoItemTag'
@@ -50,9 +51,17 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
   },
+  linkButton: {
+    backgroundColor: theme.colors.primary,
+    alignItems: 'center',
+    marginVertical: 10,
+    marginHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: theme.borderRadius.small,
+  },
 })
 
-const RepositoryItem = ({ item, itemTheme }) => {
+const RepositoryItem = ({ hasLinkButton, buttonText, handlePress, item, itemTheme }) => {
   return (
     <View
       key={item.id}
@@ -80,6 +89,13 @@ const RepositoryItem = ({ item, itemTheme }) => {
         reviewCount={item.reviewCount}
         rating={item.ratingAverage}
       />
+      { hasLinkButton && 
+        <Pressable style={styles.linkButton} onPress={handlePress}>
+          <Text color='textWhite' fontSize='subheading' >
+            {buttonText}
+          </Text>
+        </Pressable>
+      }
     </View>
   )
 }
