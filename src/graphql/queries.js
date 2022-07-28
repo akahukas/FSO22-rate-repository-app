@@ -39,9 +39,17 @@ export const GET_REPOSITORIES = gql`
 
 export const GET_ME = gql`
   ${CORE_USER_FIELDS}
-  query {
+  ${CORE_REVIEW_FIELDS}
+  query getLoggedInUser($includeReviews: Boolean = false) {
     me {
       ...CoreUserFields
+      reviews @include(if: $includeReviews) {
+        edges {
+          node {
+            ...CoreReviewFields
+          }
+        }
+      }
     }
   }
 `

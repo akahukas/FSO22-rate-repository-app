@@ -5,6 +5,7 @@ import Constants from 'expo-constants'
 // Hookit.
 import { useQuery, useApolloClient } from '@apollo/client'
 import useAuthStorage from '../hooks/useAuthStorage'
+import { useNavigate } from 'react-router-native'
 
 // Kyselyt.
 import { GET_ME } from '../graphql/queries'
@@ -30,6 +31,9 @@ const AppBar = () => {
   // Tallennetaan komponentin tilaan kirjautunut käyttäjä.
   const [loggedInUser, setLoggedInUser] = React.useState(null)
 
+  // Hyödynnetään uloskirjautumisen yhteydessä.
+  const navigate = useNavigate()
+
   // Muuttujat Apollon ja Storagen kontrollointiin.
   const apolloClient = useApolloClient()
   const authStorage = useAuthStorage()
@@ -54,6 +58,9 @@ const AppBar = () => {
     await authStorage.removeAccessToken()
     setLoggedInUser(null)
     apolloClient.resetStore()
+
+    // Siirretään käyttäjä etusivulle.
+    navigate('/')
   }
 
   return (
@@ -71,6 +78,15 @@ const AppBar = () => {
             tabText='Create a review'
             hasLink={true}
             path='/addreview'
+            handlePress={null}
+            style={styles.appBarTab}
+          />
+        )}
+        { loggedInUser && (
+          <AppBarTab
+            tabText='My reviews'
+            hasLink={true}
+            path='/user/reviews'
             handlePress={null}
             style={styles.appBarTab}
           />

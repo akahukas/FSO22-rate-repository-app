@@ -20,6 +20,9 @@ const styles = StyleSheet.create({
   separator: {
     height: 10,
   },
+  repositoryContainer: {
+    flex: 1,
+  },
 })
 
 export const ItemSeparator = () => <View style={styles.separator} />;
@@ -84,15 +87,17 @@ const IndividualRepository = () => {
   }
 
   return (
-    <FlatList
-      data={reviewNodes}
-      renderItem={({ item }) => <ReviewItem review={item} />}
-      keyExtractor={({ id }) => id}
-      ListHeaderComponent={() => <RepositoryInfo repository={repository} />}
-      ItemSeparatorComponent={ItemSeparator}
-      onEndReached={onEndReach}
-      onEndReachedThreshold={0.3}
-    />
+    <View style={styles.repositoryContainer}>
+      <FlatList
+        data={reviewNodes}
+        renderItem={({ item }) => <ReviewItem review={item} />}
+        keyExtractor={({ id }) => id}
+        ListHeaderComponent={() => <RepositoryInfo repository={repository} />}
+        ItemSeparatorComponent={ItemSeparator}
+        onEndReached={onEndReach}
+        onEndReachedThreshold={0.3}
+      />
+    </View>
   )
 }
 

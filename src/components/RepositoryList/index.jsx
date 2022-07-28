@@ -21,6 +21,9 @@ const styles = StyleSheet.create({
   statusMessage: {
     marginTop: 100,
     alignItems: 'center',
+  },
+  repositoriesContainer: {
+    flex: 1,
   }
 });
 
@@ -112,7 +115,7 @@ const RepositoryScene = () => {
   const [filter, setFilter] = useState('')
 
   return (
-    <View>
+    <View style={styles.repositoriesContainer}>
       <Filter
         filter={filter}
         setFilter={setFilter}
