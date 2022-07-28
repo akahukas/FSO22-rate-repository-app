@@ -1,12 +1,16 @@
+// Komponentit ja tyyliasetukset.
 import { View, Pressable, StyleSheet, Alert } from 'react-native'
 import Text from '../Text'
 import theme from '../../theme'
 
+// Kirjasto päivämäärien hallinnointiin.
 import { format } from 'date-fns'
 
+// Hookit.
 import { useNavigate } from 'react-router-native'
 import useDeleteReview from '../../hooks/useDeleteReview'
 
+// Tyyliasetukset.
 const styles = StyleSheet.create({
   reviewItem: {
     display: 'flex',
@@ -48,7 +52,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     alignItems: 'center',
     marginVertical: 10,
-    marginLeft: 10,
     marginRight: 10,
     paddingVertical: 10,
     paddingHorizontal: 32,
@@ -66,6 +69,7 @@ const styles = StyleSheet.create({
   },
 })
 
+// Ikoni, joka näyttää repositoriolle annetun arvosanan.
 const RatingIcon = ({ rating }) => (
   <View style={styles.ratingIconOuterCircle} >
     <View style={styles.ratingIconInnerCircle} >
@@ -76,7 +80,10 @@ const RatingIcon = ({ rating }) => (
   </View>
 )
 
+// Komponentti, joka vastaa nimen ja päivämäärän renderöinnistä.
 const UserAndDate = ({ reviewView, review }) => {
+
+  // Muotoillaan parametrina saatu päivämäärä haluttuun muotoon.
   const date = format(new Date(review.createdAt), 'dd.MM.yyyy')
 
   return (
@@ -102,8 +109,10 @@ const ReviewItem = ({ hasActions, review, refetch }) => {
   // Hyödynnetään oikean repositorion näkymään siirryttäessä.
   const navigate = useNavigate()
 
+  // Hook, joka käsittelee arvostelun poistamisen.
   const [deleteReview] = useDeleteReview()
 
+  // Tapahtumankäsittelijä arvostelun poistamiselle.
   const onDelete = async () => {
     try {
       // Poistetaan arvostelu.
@@ -116,10 +125,12 @@ const ReviewItem = ({ hasActions, review, refetch }) => {
     }
   }
 
+  // Poistopainikkeen tapahtumankäsittelijä.
   const handleRemove = (event) => {
     event.preventDefault()
 
-    // Avataan varoitusikkuna.
+    // Avataan varoitusikkuna,
+    // varmistetaan käyttäjän toimenpide.
     Alert.alert(
       'Delete review',
       'Are you sure you want to delete this review?',

@@ -73,7 +73,7 @@ const AppBar = () => {
           handlePress={null}
           style={styles.appBarTab}
         />
-        { loggedInUser && (
+        { loggedInUser && ( // Ehdollinen renderöinti.
           <AppBarTab
             tabText='Create a review'
             hasLink={true}
@@ -82,7 +82,7 @@ const AppBar = () => {
             style={styles.appBarTab}
           />
         )}
-        { loggedInUser && (
+        { loggedInUser && ( // Ehdollinen renderöinti.
           <AppBarTab
             tabText='My reviews'
             hasLink={true}
@@ -91,7 +91,7 @@ const AppBar = () => {
             style={styles.appBarTab}
           />
         )}
-        { loggedInUser !== null // Ehdollinen rendeöinti riippuen komponentin tilasta.
+        { loggedInUser !== null // Ehdollinen renderöinti.
             ? (
               <AppBarTab
                 tabText='Sign out'
@@ -110,7 +110,7 @@ const AppBar = () => {
               />
             )
         }
-        { !loggedInUser && (
+        { !loggedInUser && ( // Ehdollinen renderöinti.
           <AppBarTab
             tabText='Sign up'
             hasLink={true}

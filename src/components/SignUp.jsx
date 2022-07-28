@@ -3,13 +3,16 @@ import Text from './Text'
 import FormikTextInput from './FormikTextInput'
 import { Pressable, View, StyleSheet } from 'react-native'
 
+// KIrjastot lomakkeen käsittelyyn.
 import { Formik } from 'formik'
 import * as yup from 'yup'
 
+// Hookit.
 import useSignUp from '../hooks/useSignUp'
 import useSignIn from '../hooks/useSignIn'
 import { useNavigate } from 'react-router-native'
 
+// Tyyliasetukset.
 import theme from '../theme'
 
 const initialValues = {
@@ -72,6 +75,7 @@ const SignUpForm = ({ onSubmit }) => {
   )
 }
 
+// Lomakkeeseen asetettujen arvojen validointi.
 const validationSchema = yup.object().shape({
   username: yup
     .string()
@@ -102,8 +106,13 @@ export const SignUpContainer = ({ onSubmit }) => {
 }
 
 const SignUp = () => {
+  // Käyttäjän rekisteröinnin ja
+  // sisäänkirjaamisen hoitavat funktiot.
   const [signUp] = useSignUp()
   const [signIn] = useSignIn()
+
+  // Hyödynnetään rekisteröinnin ja
+  // kirjautumisen onnistuessa etusivulle siirtyessä.
   const navigate = useNavigate()
 
   const onSubmit = async (values) => {

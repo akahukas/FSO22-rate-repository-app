@@ -33,3 +33,11 @@ export const CORE_USER_FIELDS = gql`
     username
   }
 `
+
+export const CORE_PAGE_INFO_FIELDS = gql`
+  fragment CorePageInfoFields on PageInfo {
+    endCursor
+    startCursor
+    hasNextPage
+  }
+`

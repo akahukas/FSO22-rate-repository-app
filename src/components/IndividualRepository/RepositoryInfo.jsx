@@ -1,10 +1,12 @@
+// Komponentit ja tyyliasetukset.
 import { View, StyleSheet } from 'react-native'
 import RepositoryItem from '../RepositoryList/RepositoryItem'
-
 import theme from '../../theme'
 
+// Kirjasto linkkien avaamiseen ja käsittelyyn.
 import * as Linking from 'expo-linking'
 
+// Tyyliasetukset.
 const styles = StyleSheet.create({
   repositoryItem: {
     backgroundColor: theme.colors.repositoryItemBackground,
@@ -14,6 +16,7 @@ const styles = StyleSheet.create({
   },
 })
 
+// Välikomponentti.
 export const ItemSeparator = () => <View style={styles.separator} />
 
 const RepositoryInfo = ({ repository }) => {

@@ -26,13 +26,40 @@ const Main = () => {
     <View style={styles.container}>
       <AppBar />
       <Routes>
-        <Route path='/' element={<RepositoryScene />} exact />
-        <Route path='/addreview' element={<AddReviewForm />} exact />
-        <Route path='/user/reviews' element={<LoggedInReviews />} exact />
-        <Route path='/signin' element={<SignIn />} exact />
-        <Route path='/signup' element={<SignUp />} exact />
-        <Route path='/repositories/:id' element={<IndividualRepository />} exact />
-        <Route path='*' element={<Navigate to='/' replace />} />
+        <Route
+          path='/'
+          element={<RepositoryScene />}
+          exact
+        />
+        <Route
+          path='/addreview'
+          element={<AddReviewForm />}
+          exact
+        />
+        <Route
+          path='/user/reviews'
+          element={<LoggedInReviews />}
+          exact
+        />
+        <Route
+          path='/signin'
+          element={<SignIn />}
+          exact
+        />
+        <Route
+          path='/signup'
+          element={<SignUp />}
+          exact
+        />
+        <Route
+          path='/repositories/:id'
+          element={<IndividualRepository />}
+          exact
+        />
+        <Route
+          path='*'
+          element={<Navigate to='/' replace />}
+        />
       </Routes>
     </View>
   );

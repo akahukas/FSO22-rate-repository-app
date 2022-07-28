@@ -3,11 +3,13 @@ import { gql } from '@apollo/client'
 import {
   CORE_REPOSITORY_FIELDS,
   CORE_REVIEW_FIELDS,
-  CORE_USER_FIELDS
+  CORE_USER_FIELDS,
+  CORE_PAGE_INFO_FIELDS,
 } from './fragments'
 
 export const GET_REPOSITORIES = gql`
   ${CORE_REPOSITORY_FIELDS}
+  ${CORE_PAGE_INFO_FIELDS}
   query getRepositories(
     $orderBy: AllRepositoriesOrderBy,
     $orderDirection: OrderDirection,
@@ -29,9 +31,7 @@ export const GET_REPOSITORIES = gql`
             cursor
           }
           pageInfo {
-            endCursor
-            startCursor
-            hasNextPage
+            ...CorePageInfoFields
           }
         }
       }
@@ -44,6 +44,7 @@ export const GET_ME = gql`
     me {
       ...CoreUserFields
       reviews @include(if: $includeReviews) {
+        totalCount
         edges {
           node {
             ...CoreReviewFields
@@ -61,6 +62,7 @@ export const GET_ME = gql`
 export const REPOSITORY_WITH_URL_AND_REVIEWS = gql`
   ${CORE_REPOSITORY_FIELDS}
   ${CORE_REVIEW_FIELDS}
+  ${CORE_PAGE_INFO_FIELDS}
   query getRepositoryWithUrl($id: ID!, $first: Int, $after: String) {
     repository(id: $id) {
       ...CoreRepositoryFields
@@ -77,9 +79,7 @@ export const REPOSITORY_WITH_URL_AND_REVIEWS = gql`
           cursor
         }
         pageInfo {
-          endCursor
-          startCursor
-          hasNextPage
+          ...CorePageInfoFields
         }
       }
     }

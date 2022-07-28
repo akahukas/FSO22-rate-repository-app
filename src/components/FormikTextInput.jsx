@@ -1,9 +1,12 @@
-import { StyleSheet } from 'react-native'
-import { useField } from 'formik'
-
+// Komponentit.
 import TextInput from './TextInput'
 import Text from './Text'
 
+// Hookit.
+import { useField } from 'formik'
+
+// Tyyliasetukset.
+import { StyleSheet } from 'react-native'
 import theme from '../theme'
 
 const styles = StyleSheet.create({

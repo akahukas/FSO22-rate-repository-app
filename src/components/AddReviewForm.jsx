@@ -1,14 +1,16 @@
+// Komponentit ja tyyliasetukset.
 import Text from './Text'
 import FormikTextInput from './FormikTextInput'
 import { Pressable, View, StyleSheet } from 'react-native'
+import theme from '../theme'
 
+// Kirjastot lomakkeen käsittelyyn.
 import { Formik } from 'formik'
 import * as yup from 'yup'
 
+// Hookit.
 import useAddReviewForm from '../hooks/useAddReviewForm'
 import { useNavigate } from 'react-router-native'
-
-import theme from '../theme'
 
 const initialValues = {
   ownerName: '',
@@ -17,6 +19,7 @@ const initialValues = {
   text: '',
 }
 
+// Tyyliasetukset.
 const styles = StyleSheet.create({
   addReviewForm: {
     backgroundColor: theme.colors.formBackground,
@@ -75,6 +78,7 @@ const ReviewForm = ({ onSubmit }) => {
   )
 }
 
+// Lomakkeeseen asetettujen arvojen kelvollisuuden käsittely.
 const validationSchema = yup.object().shape({
   ownerName: yup
     .string()
@@ -109,12 +113,15 @@ const AddReviewForm = () => {
   const [addReview] = useAddReviewForm()
   const navigate = useNavigate()
 
+  // Lomakkeen lähettämisen tapahtumankäsittelijä.
   const onSubmit = async (values) => {
     const { ownerName, repositoryName, rating, text } = values
     
     try {
       const { data } = await addReview({ ownerName, repositoryName, rating, text })
       
+      // Lisäyksen onnistuessa siirrytään sen
+      // repositorion sivulle, jolle arviointi annettiin.
       if (data.createReview) {
         navigate(`/repositories/${data.createReview.repositoryId}`)
       }

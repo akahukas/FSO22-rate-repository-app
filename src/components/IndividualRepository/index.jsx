@@ -70,7 +70,10 @@ const IndividualRepository = () => {
     ? reviews.edges.map(edge => edge.node)
     : [];
 
+  // Tapahtumankäsittelijä seuraavien arvostelujen kysymiseen
+  // palvelimelta. Kutsutaan jos käyttäjä selaa listan loppuun. 
   const onEndReach = () => {
+    // Tarkistetaan onko palvelimella olemassa enempää arviointeja.
     const canFetchMore = !loading && data?.repository.reviews.pageInfo.hasNextPage
 
     if (!canFetchMore) {

@@ -1,6 +1,6 @@
-import { Text as NativeText, StyleSheet } from 'react-native';
-
-import theme from '../theme';
+// Komponentti ja tyyliasetukset.
+import { Text as NativeText, StyleSheet } from 'react-native'
+import theme from '../theme'
 
 const styles = StyleSheet.create({
   text: {
@@ -27,9 +27,10 @@ const styles = StyleSheet.create({
   fontWeightBold: {
     fontWeight: theme.fontWeights.bold,
   },
-});
+})
 
 const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
+  // Muokataan tyyliasetuksia saatujen parametrien mukaan.
   const textStyle = [
     styles.text,
     color === 'textSecondary' && styles.colorTextSecondary,
@@ -39,9 +40,9 @@ const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
     fontSize === 'subheading' && styles.fontSizeSubheading,
     fontWeight === 'bold' && styles.fontWeightBold,
     style,
-  ];
+  ]
 
-  return <NativeText style={textStyle} {...props} />;
-};
+  return <NativeText style={textStyle} {...props} />
+}
 
-export default Text;
+export default Text
