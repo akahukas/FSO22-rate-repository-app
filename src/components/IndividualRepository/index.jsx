@@ -29,23 +29,27 @@ const IndividualRepository = () => {
   const { id } = useParams()
 
   // Tehdään GraphQL-kysely haetun id:n avulla.
-  const getRepositoryWithUrl = useQuery(REPOSITORY_WITH_URL_AND_REVIEWS, {
-    variables: { id },
+  const { data, error, loading, fetchMore } = useQuery(REPOSITORY_WITH_URL_AND_REVIEWS, {
+    variables: {
+      id,
+      first: 3,
+      after: '',
+    },
     skip: !id,
     fetchPolicy: 'cache-and-network',
   })
 
   // Kyselyssä ilmenee ongelma.
-  if (getRepositoryWithUrl.error) {
+  if (error) {
     return (
       <View style={styles.statusMessage} >
         <Text fontSize='subheading' fontWeight='bold' >
-          An error occurred: {getRepositoryWithUrl.error.message}
+          An error occurred: {error.message}
         </Text>
       </View>
     )
     // Kyselyyn ei ole vielä vastattu.
-  } else if (getRepositoryWithUrl.loading) {
+  } else if (loading) {
     return (
       <View style={styles.statusMessage} >
         <Text fontSize='subheading' fontWeight='bold' >
@@ -57,11 +61,27 @@ const IndividualRepository = () => {
 
   // Tallennetaan muuttujiin kyselyn vastauksesta
   // renderöitävä repositorio ja sen arvioinnit.
-  const repository = getRepositoryWithUrl.data.repository
-  const reviews = getRepositoryWithUrl.data.repository.reviews
+  const repository = data.repository
+  const reviews = data.repository.reviews
   const reviewNodes = reviews
     ? reviews.edges.map(edge => edge.node)
     : [];
+
+  const onEndReach = () => {
+    const canFetchMore = !loading && data?.repository.reviews.pageInfo.hasNextPage
+
+    if (!canFetchMore) {
+      return
+    }
+
+    fetchMore({
+      variables: {
+        id,
+        first: 3,
+        after: data.repository.reviews.pageInfo.endCursor,
+      },
+    })
+  }
 
   return (
     <FlatList
@@ -70,6 +90,8 @@ const IndividualRepository = () => {
       keyExtractor={({ id }) => id}
       ListHeaderComponent={() => <RepositoryInfo repository={repository} />}
       ItemSeparatorComponent={ItemSeparator}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.3}
     />
   )
 }

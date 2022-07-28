@@ -26,7 +26,12 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />
 
-export const RepositoryListContainer = ({ repositories, selectedPrinciple, setSelectedPrinciple }) => {
+export const RepositoryListContainer = ({
+  repositories,
+  onEndReach,
+  selectedPrinciple,
+  setSelectedPrinciple,
+}) => {
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
     : [];
@@ -51,6 +56,8 @@ export const RepositoryListContainer = ({ repositories, selectedPrinciple, setSe
           />
         </Pressable>
       )}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.3}
     />
   );
 }
@@ -62,10 +69,15 @@ const RepositoryList = ({ filter }) => {
   // uudelleenkysely puolen sekunnin viiveellä.
   const [debouncedFilter] = useDebounce(filter, 500)
 
-  const { repositories, error, loading } = useRepositories(
+  const { repositories, fetchMore, error, loading } = useRepositories({
+    first: 8,
     selectedPrinciple,
     debouncedFilter
-  );
+  });
+
+  const onEndReach = () => {
+    fetchMore()
+  }
 
   if (error) {
     return (
@@ -89,6 +101,7 @@ const RepositoryList = ({ filter }) => {
       repositories={repositories}
       selectedPrinciple={selectedPrinciple}
       setSelectedPrinciple={setSelectedPrinciple}
+      onEndReach={onEndReach}
     />
   )
 }

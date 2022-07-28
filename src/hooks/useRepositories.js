@@ -2,40 +2,55 @@ import { useQuery } from '@apollo/client'
 
 import { GET_REPOSITORIES } from '../graphql/queries'
 
-const useRepositories = (selectedPrinciple, debouncedFilter) => {
-  let orderBy = null
-  let orderDirection = null
+const useRepositories = (variables) => {
 
-  if (selectedPrinciple === 'latestRepositories') {
-    orderBy = 'CREATED_AT'
-    orderDirection = 'DESC'
+  if (variables.selectedPrinciple === 'latestRepositories') {
+    variables = {
+      ...variables,
+      orderBy: 'CREATED_AT',
+      orderDirection: 'DESC',
+    }
   }
-  else if (selectedPrinciple === 'HighestRatedRepositories') {
-    orderBy = 'RATING_AVERAGE'
-    orderDirection = 'DESC'
+  else if (variables.selectedPrinciple === 'HighestRatedRepositories') {
+    variables = {
+      ...variables,
+      orderBy: 'RATING_AVERAGE',
+      orderDirection: 'DESC',
+    }
   }
-  else if (selectedPrinciple === 'LowestRatedRepositories') {
-    orderBy = 'RATING_AVERAGE'
-    orderDirection = 'ASC'
+  else if (variables.selectedPrinciple === 'LowestRatedRepositories') {
+    variables = {
+      ...variables,
+      orderBy: 'RATING_AVERAGE',
+      orderDirection: 'ASC',
+    }
   }
 
-  const { data, error, loading } = useQuery(GET_REPOSITORIES, {
-    variables: {
-      orderBy,
-      orderDirection,
-      searchKeyword: debouncedFilter,
-    },
+  const { data, error, loading, fetchMore, ...result } = useQuery(GET_REPOSITORIES, {
+    variables,
     fetchPolicy: 'cache-and-network',
   })
 
-  if (!data || loading) {
-    return {
-      loading: true,
-    }
-  } else {
-    const repositories = data.repositories
+  const handleFetchMore = () => {
+    const canFetchMore = !loading && data?.repositories.pageInfo.hasNextPage
 
-    return { repositories, error, loading }
+    if (!canFetchMore) {
+      return
+    }
+
+    fetchMore({
+      variables: {
+        after: data.repositories.pageInfo.endCursor,
+        ...variables,
+      }
+    })
+  }
+  return {
+    repositories: data?.repositories,
+    fetchMore: handleFetchMore,
+    error,
+    loading,
+    ...result,
   }
 }
 
