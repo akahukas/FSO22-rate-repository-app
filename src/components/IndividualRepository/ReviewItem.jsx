@@ -1,8 +1,11 @@
-import { View, StyleSheet } from 'react-native'
+import { View, Pressable, StyleSheet, Alert } from 'react-native'
 import Text from '../Text'
 import theme from '../../theme'
 
 import { format } from 'date-fns'
+
+import { useNavigate } from 'react-router-native'
+import useDeleteReview from '../../hooks/useDeleteReview'
 
 const styles = StyleSheet.create({
   reviewItem: {
@@ -37,6 +40,30 @@ const styles = StyleSheet.create({
     marginLeft: 60,
     marginTop: 5,
   },
+  buttonContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  viewButton: {
+    backgroundColor: theme.colors.primary,
+    alignItems: 'center',
+    marginVertical: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 32,
+    borderRadius: theme.borderRadius.small,
+  },
+  deleteButton: {
+    backgroundColor: theme.colors.deleteButton,
+    alignItems: 'center',
+    padding: 20,
+    marginVertical: 10,
+    marginRight: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 40,
+    borderRadius: theme.borderRadius.small,
+  },
 })
 
 const RatingIcon = ({ rating }) => (
@@ -49,13 +76,17 @@ const RatingIcon = ({ rating }) => (
   </View>
 )
 
-const UserAndDate = ({ createdAt, username }) => {
-  const date = format(new Date(createdAt), 'dd.MM.yyyy')
+const UserAndDate = ({ reviewView, review }) => {
+  const date = format(new Date(review.createdAt), 'dd.MM.yyyy')
 
   return (
     <View style={styles.userAndDate} >
       <Text fontWeight='bold'>
-        {username}
+        {
+          !reviewView
+            ? review.user.username
+            : review.repository.fullName
+        }
       </Text>
       <Text color='textSecondary' >
         {date}
@@ -63,10 +94,48 @@ const UserAndDate = ({ createdAt, username }) => {
     </View>
 )}
 
-const ReviewItem = ({ review }) => {
+const ReviewItem = ({ hasActions, review, refetch }) => {
   // Jos arvostelun teksti on riittävän lyhyt, vältetään
   // sen joutuminen samalle riville muiden elementtien kanssa.
   const wrapText = review.text.length <= 40
+
+  // Hyödynnetään oikean repositorion näkymään siirryttäessä.
+  const navigate = useNavigate()
+
+  const [deleteReview] = useDeleteReview()
+
+  const onDelete = async () => {
+    try {
+      // Poistetaan arvostelu.
+      await deleteReview({ id: review.id })
+      
+      // Noudetaan päivittyneet arvostelut.
+      await refetch({ id: review.id })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleRemove = (event) => {
+    event.preventDefault()
+
+    // Avataan varoitusikkuna.
+    Alert.alert(
+      'Delete review',
+      'Are you sure you want to delete this review?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel'
+        },
+        {
+          text: 'Delete',
+          onPress: () => {onDelete()},
+          style: 'destructive'
+        },
+      ]
+    )
+  }
 
   return (
     <View
@@ -76,8 +145,8 @@ const ReviewItem = ({ review }) => {
         rating={review.rating}
       />
       <UserAndDate
-        createdAt={review.createdAt}
-        username={review.user.username}
+        reviewView={hasActions}
+        review={review}
       />
       <Text style={wrapText
         ? {...styles.reviewText, minWidth: 200}
@@ -86,6 +155,25 @@ const ReviewItem = ({ review }) => {
       >
         {review.text}
       </Text>
+      { hasActions && (
+        <View style={styles.buttonContainer} >
+          <Pressable
+            style={styles.viewButton}
+            onPress={() => {
+              navigate(`/repositories/${review.repositoryId}`)
+            }}
+          >
+            <Text color='textWhite' fontSize='subheading' >
+              View repository
+            </Text>
+          </Pressable>
+          <Pressable style={styles.deleteButton} onPress={handleRemove}>
+            <Text color='textWhite' fontSize='subheading' >
+              Delete review
+            </Text>
+          </Pressable>
+        </View>
+      )}
     </View>
   )
 }

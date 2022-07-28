@@ -15,6 +15,7 @@ const theme = {
     ratingIconInnerCircle: 'white',
     textInputBorder: 'gray',
     error: '#ff0000',
+    deleteButton: '#da2d2d'
   },
   fontSizes: {
     body: 14,

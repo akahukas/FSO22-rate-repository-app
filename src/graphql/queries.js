@@ -47,6 +47,10 @@ export const GET_ME = gql`
         edges {
           node {
             ...CoreReviewFields
+            repositoryId
+            repository {
+              fullName
+            }
           }
         }
       }

@@ -7,6 +7,7 @@ const useRepositories = (variables) => {
   if (variables.selectedPrinciple === 'latestRepositories') {
     variables = {
       ...variables,
+      searchKeyword: variables.debouncedFilter,
       orderBy: 'CREATED_AT',
       orderDirection: 'DESC',
     }
@@ -14,6 +15,7 @@ const useRepositories = (variables) => {
   else if (variables.selectedPrinciple === 'HighestRatedRepositories') {
     variables = {
       ...variables,
+      searchKeyword: variables.debouncedFilter,
       orderBy: 'RATING_AVERAGE',
       orderDirection: 'DESC',
     }
@@ -21,6 +23,7 @@ const useRepositories = (variables) => {
   else if (variables.selectedPrinciple === 'LowestRatedRepositories') {
     variables = {
       ...variables,
+      searchKeyword: variables.debouncedFilter,
       orderBy: 'RATING_AVERAGE',
       orderDirection: 'ASC',
     }

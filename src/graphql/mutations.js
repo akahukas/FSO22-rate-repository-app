@@ -23,6 +23,12 @@ export const ADD_REVIEW = gql`
   }
 `
 
+export const DELETE_REVIEW = gql`
+  mutation DeleteReview($id: ID!) {
+    deleteReview(id: $id)
+  }
+`
+
 export const ADD_USER = gql`
   ${CORE_USER_FIELDS}
   mutation AddUser($user: CreateUserInput) {
